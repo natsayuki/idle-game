@@ -1,0 +1,36 @@
+.progress-button-cooldown-bar, .progress-button-wrapper, .progress-button .md-button-content {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-button-cooldown-bar{
+  transition: all .2s linear;
+  height: 100%;
+  background-color: black;
+  z-index: -1;
+  opacity: .3;
+}
+
+.progress-button-wrapper{
+  width: 100%;
+  height: 100%;
+}
+
+.progress-button .md-button-content{
+  width: 100%;
+  height: 100%;
+}
+
+.progress-button {
+  border: 1px solid black;
+  padding: 0px !important;
+  position:
+}
+
+.progress-button .md-ripple {
+  padding: 0px !important;
+}
