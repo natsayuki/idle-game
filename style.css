@@ -64,6 +64,7 @@
   display: flex !important;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .md-stepper{
@@ -78,11 +79,11 @@
   display: none;
 }
 
-.campsite {
+.campsite .md-stepper-content {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  flex-direction: row !important;
 }
 
 .log, .campsite-wrapper {
