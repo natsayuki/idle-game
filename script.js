@@ -9,14 +9,39 @@ const recipies = [
       'sticks': 1,
       'rocks': 1,
     }
+  },
+  {
+    name: 'spear',
+    cost: {
+      'sticks': 5,
+      'rocks': 5,
+    },
+    unlock: {
+      'sticks': 1,
+      'rocks': 1,
+    }
+  },
+  {
+    name: 'campfire',
+    cost: {
+      'sticks': 5,
+      'rocks': 10,
+      'leaves': 25,
+    },
+    unlock: {
+      'sticks': 5,
+      'rocks': 5,
+      'leaves': 5,
+    }
   }
 ]
 
 const data = {
   items: {},
-  tab: 'theforest',
   refresh: 0,
   unlockedRecipies: [],
+  log: [],
+  storyIndex: 0,
 }
 
 const methods = {
@@ -29,12 +54,15 @@ const methods = {
     recipies.forEach(recipe => {
       let done = true;
       Object.keys(recipe.unlock).forEach(item => {
-        if(data.items[item] < recipe[item] || typeof data.items[item] == 'undefined') done = false
-        console.log(data.unlockedRecipies[recipe]);
-        if(data.unlockedRecipies.indexOf(recipe) != -1) done = false;
+        if(data.items[item] < recipe.unlock[item] || data.unlockedRecipies.indexOf(recipe) != -1) done = false
       });
       if(done) data.unlockedRecipies.push(recipe)
     });
+
+    if(item == 'campfire') {
+      methods.progressStory();
+    }
+
     data.refresh++;
   },
   giveOption(options) {
@@ -61,11 +89,34 @@ const methods = {
       }
     });
   },
+  progressStory() {
+    data.storyIndex++;
+    if(data.storyIndex == 1) {
+      data.log.push({
+        dialogue: `a weathered looking man lets himself a spot near your campfire. he puts his hands out at the fire to warm them up.`
+      })
+    }
+  },
   gather() {
-    methods.giveOption(['sticks', 'rocks', 'leaves']);
+    for(let i = 0; i < 5; i++) {
+      methods.giveOption(['sticks', 'rocks', 'leaves']);
+    }
   },
   mine() {
-    methods.giveOption(['iron', 'coal', 'sulfur', 'rocks']);
+    for(let i = 0; i < 3; i++){
+      methods.giveOption(['iron', 'coal', 'sulfur', 'rocks']);
+    }
+  },
+  hunt() {
+    for(let i = 0; i < 3; i++){
+      methods.giveOption(['pelt', 'meat', 'hide']);
+    }
+  },
+  cook() {
+    if(data.items.meat > 0) {
+      data.items.meat--;
+      methods.give('cooked meat');
+    }
   }
 }
 

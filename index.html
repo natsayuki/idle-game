@@ -12,8 +12,9 @@
     <div id="app">
       <md-steppers md-alternative>
         <md-step md-label="the forest">
-          <progress-button time="2" cd="1" :action="gather">gather</progress-button>
+          <progress-button time="1" cd="2" :action="gather">gather</progress-button>
           <progress-button time="5" cd="10" :action="mine" v-if="items.picaxe > 0">mine</progress-button>
+          <progress-button time="5" cd="15" :action="hunt" v-if="items.spear > 0">hunt</progress-button>
           <span class="refresh" :key="refresh">{{items}}</span>
         </md-step>
         <md-step md-label="inventory" v-if="Object.keys(items).length > 0">
@@ -27,6 +28,22 @@
             <div>cost</div>
             <div v-for="(amnt, item) in recipe.cost">{{item}}: {{amnt}}</div>
             <md-button @click="craft(recipe.name)" :disabled="!canAfford(recipe.name)">craft</md-button>
+          </div>
+        </md-step>
+        <md-step md-label="the campsite" v-if="items.campfire > 0" class="campsite">
+          <div class="log">
+            <div class="log-box">
+              <div v-for="dialogue in log">
+                {{dialogue.dialogue}}
+              </div>
+            </div>
+            <div class="log-choice">
+
+            </div>
+          </div>
+          <div class="campsite-wrapper">
+            <progress-button time="30" cd="10" :action="cook" :disabled="items.meat <= 0">cook</progress-button>
+            <span>requires 1 meat</span>
           </div>
         </md-step>
       </md-steppers>
