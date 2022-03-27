@@ -1,7 +1,7 @@
 const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
 
 Vue.component('progress-button', {
-  props: ['time', 'cd'],
+  props: ['time', 'cd', 'action'],
   data: function() {
     return {
       actionTime: 0,
@@ -33,6 +33,7 @@ Vue.component('progress-button', {
       else if(this.$data.actionTime >= parseInt(this.$props.time)) {
         this.$data.cooldownTime = parseInt(this.$props.cd);
         this.$data.actionTime = 0;
+        this.$props.action();
       }
     }
   },

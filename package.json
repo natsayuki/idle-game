@@ -1,0 +1,22 @@
+{
+  "name": "idlegame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the42ndturtle/idle-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/the42ndturtle/idle-game/issues"
+  },
+  "homepage": "https://github.com/the42ndturtle/idle-game#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}

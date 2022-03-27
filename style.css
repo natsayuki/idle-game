@@ -1,3 +1,11 @@
+#app{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
 .progress-button-cooldown-bar, .progress-button-wrapper, .progress-button .md-button-content {
   position: absolute;
   top: 0px;
@@ -33,4 +41,33 @@
 
 .progress-button .md-ripple {
   padding: 0px !important;
+}
+
+.tab {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.md-stepper-number {
+  opacity: 0;
+}
+
+.md-stepper, .md-steppers-container, .md-steppers-wrapper, .md-steppers {
+  width: 100vw;
+  height: 100% !important;
+}
+
+.md-stepper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  margin: 0px;
+}
+
+.refresh {
+  display: none;
 }

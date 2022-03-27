@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>idle game</title>
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
@@ -9,10 +10,28 @@
   </head>
   <body>
     <div id="app">
-      <progress-button time="5" cd="3">test</progress-button>
-      <progress-button time="2" cd="10">test 2</progress-button>
+      <md-steppers md-alternative>
+        <md-step md-label="the forest">
+          <progress-button time="2" cd="1" :action="gather">gather</progress-button>
+          <progress-button time="5" cd="10" :action="mine" v-if="items.picaxe > 0">mine</progress-button>
+          <span class="refresh" :key="refresh">{{items}}</span>
+        </md-step>
+        <md-step md-label="inventory" v-if="Object.keys(items).length > 0">
+          <div v-for="(amnt, item) in items">
+            {{item}}: {{amnt}}
+          </div>
+        </md-step>
+        <md-step md-label="crafting" v-if="Object.keys(items).length > 0">
+          <div v-for="recipe in unlockedRecipies">
+            <div class="md-title">{{recipe.name}}</div>
+            <div>cost</div>
+            <div v-for="(amnt, item) in recipe.cost">{{item}}: {{amnt}}</div>
+            <md-button @click="craft(recipe.name)" :disabled="!canAfford(recipe.name)">craft</md-button>
+          </div>
+        </md-step>
+      </md-steppers>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://unpkg.com/vue-material@beta"></script>
     <script src="components/progress-button.js"></script>
     <script src="script.js"></script>
