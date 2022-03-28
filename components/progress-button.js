@@ -47,7 +47,7 @@ Vue.component('progress-button', {
 <md-button :md-ripple="false" class="progress-button" :disabled="cooldownTime > 0">
   <span class="progress-button-cooldown-bar" :style="'width: ' + getWidth() + 'px'"></span>
   <slot></slot>
-  <div class="progress-button-wrapper" @mousedown="startAction" @mouseup="stopAction" @mouseleave="stopAction"></div>
+  <div class="progress-button-wrapper" @mousedown="startAction" @touchstart="startAction" @touchend="stopAction" @mouseup="stopAction" @mouseleave="stopAction" @toucchleave="stopAction"></div>
 </md-button>
   `
 });

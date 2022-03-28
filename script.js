@@ -33,6 +33,17 @@ const recipies = [
       'rocks': 5,
       'leaves': 5,
     }
+  },
+  {
+    name: 'shelter',
+    cost: {
+      'leaves': 25,
+      'rocks': 25,
+      'sticks': 75,
+    },
+    unlock: {
+      'unobtainable': 1,
+    }
   }
 ]
 
@@ -54,7 +65,7 @@ const methods = {
     recipies.forEach(recipe => {
       let done = true;
       Object.keys(recipe.unlock).forEach(item => {
-        if(data.items[item] < recipe.unlock[item] || data.unlockedRecipies.indexOf(recipe) != -1) done = false
+        if(data.items[item] < recipe.unlock[item] || typeof data.items[item] == 'undefined' || data.unlockedRecipies.indexOf(recipe) != -1) done = false
       });
       if(done) data.unlockedRecipies.push(recipe)
     });
@@ -93,8 +104,43 @@ const methods = {
     data.storyIndex++;
     if(data.storyIndex == 1) {
       data.log.push({
-        dialogue: `a weathered looking man lets himself a spot near your campfire. he puts his hands out at the fire to warm them up.`
-      })
+        dialogue: `a weathered looking man walks up and settles down at a spot near your campfire. he puts his hands out at the fire to warm them up.`
+      });
+    }
+    if(data.storyIndex == 2) {
+      data.log.push({
+        dialogue: `the man looks haggared and hungry, like he could use a bite to eat. you notice him staring at your cooked meat.`,
+        choices: [
+          {
+            choice: 'offer',
+            action: function() {
+              data.items['cooked meat']--;
+              methods.progressStory();
+            }
+          }
+        ]
+      });
+    }
+    if(data.storyIndex == 3) {
+      data.log.push({
+        dialogue: `you extend your hand. the man graciously accepts the piece of cooked meat. he bites and chews it quickly. the man finishes, then looks up at you. he makes you an offer. he can teach you how to build shelter in turn for your food.`,
+        choices: [
+          {
+            choice: 'accept',
+            action: function() {
+              methods.progressStory();
+            }
+          }
+        ]
+      });
+    }
+    if(data.storyIndex == 4) {
+      data.log.push({
+        dialogue: `"with shelter we can expand. and with expansion comes more knowledge"`
+      });
+      recipies.forEach(recipe => {
+        if(recipe.name == 'shelter') data.unlockedRecipies.push(recipe);
+      });
     }
   },
   gather() {
@@ -116,6 +162,7 @@ const methods = {
     if(data.items.meat > 0) {
       data.items.meat--;
       methods.give('cooked meat');
+      if(data.storyIndex == 1) methods.progressStory();
     }
   }
 }

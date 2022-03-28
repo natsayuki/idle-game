@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
+  <body oncontextmenu="return false;">
     <div id="app">
       <md-steppers md-alternative>
         <md-step md-label="the forest">
@@ -33,16 +33,16 @@
         <md-step md-label="the campsite" v-if="items.campfire > 0" class="campsite">
           <div class="log">
             <div class="log-box">
-              <div v-for="dialogue in log">
+              <div v-for="dialogue in log" class="log-item">
                 {{dialogue.dialogue}}
               </div>
             </div>
             <div class="log-choice">
-
+              <md-button v-for="choice in log[log.length-1].choices" @click="choice.action">{{choice.choice}}</md-button>
             </div>
           </div>
           <div class="campsite-wrapper">
-            <progress-button time="30" cd="10" :action="cook" :disabled="items.meat <= 0">cook</progress-button>
+            <progress-button time="30" cd="10" :action="cook" :disabled="items.meat <= 0 || typeof items.meat == 'undefined'">cook</progress-button>
             <span>requires 1 meat</span>
           </div>
         </md-step>
