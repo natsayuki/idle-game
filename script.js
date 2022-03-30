@@ -1,8 +1,8 @@
 const recipies = [
   {
-    name: 'picaxe',
+    name: 'spear',
     cost: {
-      'sticks': 10,
+      'sticks': 5,
       'rocks': 5,
     },
     unlock: {
@@ -11,9 +11,9 @@ const recipies = [
     }
   },
   {
-    name: 'spear',
+    name: 'picaxe',
     cost: {
-      'sticks': 5,
+      'sticks': 10,
       'rocks': 5,
     },
     unlock: {
@@ -42,7 +42,7 @@ const recipies = [
       'sticks': 75,
     },
     unlock: {
-      'unobtainable': 1,
+      'unobtainium': 1,
     }
   }
 ]
@@ -53,6 +53,12 @@ const data = {
   unlockedRecipies: [],
   log: [],
   storyIndex: 0,
+  labor: {
+    gathering: 0,
+    hunting: 0,
+    mining: 0,
+    cooking: 0,
+  }
 }
 
 const methods = {
@@ -164,8 +170,39 @@ const methods = {
       methods.give('cooked meat');
       if(data.storyIndex == 1) methods.progressStory();
     }
-  }
+  },
+  availableLabor() {
+    return data.items.shelter * 5;
+  },
+  laborAvailable(position) {
+    const al = methods.availableLabor();
+    let tl = 0;
+    Object.keys(data.labor).forEach(key => {
+      tl += data.labor[key];
+    });
+    console.log(tl, al);
+    if(tl >= al) return false;
+    if(position == 'hunting' && data.items.spear - data.labor.hunting <= 0) return false;
+    if(position == 'mining' && data.items.picaxe - data.labor.mining <= 0) return false;
+    if(position == 'cooking' && data.items.campfire - data.labor.cooking <= 0) return false;
+    return true;
+  },
 }
+
+setInterval(function() {
+  Object.keys(data.labor).forEach(position => {
+    for(let i = 0; i < data.labor[position]; i++) {
+      if(data.items['cooked meat'] > 0) {
+        if(position == 'gathering') methods.gather();
+        if(position == 'hunting') methods.hunt();
+        if(position == 'mining') methods.mine();
+        if(position == 'cooking') methods.cook();
+        data.items['cooked meat']--;
+      }
+    }
+  });
+  console.log('tick');
+}, 5000);
 
 Vue.use(VueMaterial.default);
 Vue.config.productionTip = false;

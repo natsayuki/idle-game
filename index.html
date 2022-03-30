@@ -46,6 +46,28 @@
             <span>requires 1 meat</span>
           </div>
         </md-step>
+        <md-step md-label="the hamlet" v-if="items.shelter > 0">
+          <div>
+            <md-button :disabled="!laborAvailable('gathering')" @click="labor.gathering++">add 1</md-button>
+            <md-button :disabled="labor.gathering == 0" @click="labor.gathering--">sub 1</md-button>
+            <span>gathering: {{labor.gathering}}</span>
+          </div>
+          <div v-if="items.spear > 0">
+            <md-button :disabled="!laborAvailable('hunting')" @click="labor.hunting++">add 1</md-button>
+            <md-button :disabled="labor.hunting == 0" @click="labor.hunting--">sub 1</md-button>
+            <span>hunting: {{labor.hunting}}</span>
+          </div>
+          <div v-if="items.picaxe > 0">
+            <md-button :disabled="!laborAvailable('mining')" @click="labor.mining++">add 1</md-button>
+            <md-button :disabled="labor.mining == 0" @click="labor.mining--">sub 1</md-button>
+            <span>mining: {{labor.mining}}</span>
+          </div>
+          <div v-if="items.campfire > 0">
+            <md-button :disabled="!laborAvailable('cooking')" @click="labor.cooking++">add 1</md-button>
+            <md-button :disabled="labor.cooking == 0" @click="labor.cooking--">sub 1</md-button>
+            <span>mining: {{labor.cooking}}</span>
+          </div>
+        </md-step>
       </md-steppers>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
